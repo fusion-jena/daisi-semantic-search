@@ -1,0 +1,11 @@
+CREATE TABLE `gfbio_basket` (
+  `basketid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userid` bigint(20) NOT NULL,
+  `name` varchar(75) COLLATE utf8_bin DEFAULT NULL,
+  `lastmodifieddate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `basketcontent` text COLLATE utf8_bin DEFAULT NULL,
+  `queryjson` text COLLATE utf8_bin DEFAULT NULL,
+  `querykeyword` text COLLATE utf8_bin DEFAULT NULL,
+  `queryfilter` text COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`basketid`)
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 COLLATE=utf8_bin

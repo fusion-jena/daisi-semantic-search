@@ -1,0 +1,143 @@
+<!--  <div *ngIf="messageService.messages.length">
+
+  <h3>Messages</h3><br>
+  <button class="clear"
+          (click)="messageService.clear()">clear</button>-->
+  
+   <div class="container-fluid">
+     <div class="row"> 
+        <div class="col">     
+	  
+	 
+	     
+	     <button matTooltip="Show help on query langauge" type="button" class="btn btn-secondary" *ngIf ="!showHelp" (click)="showHelpClicked()">
+		  <div class="with-icons"><mat-icon inline=true>expand_more</mat-icon> Help</div>
+		 </button>
+		 <button matTooltip="Hide help on query langauge" type="button" class="btn btn-secondary" *ngIf ="showHelp" (click)="hideHelpClicked()">
+		  <div class="with-icons"><mat-icon inline=true>expand_less</mat-icon> Hide help</div>
+		 </button>
+		 
+		  <div *ngIf="showHelp"><br>
+		       <div *ngIf="componentUI === 'biodiv1'">
+			       <p><span class="italic">The system attempts to extend your search on synonyms of the keywords and more specific terms.</span></p>
+				   <p>Combine keywords per category with capitalized AND or capitalized OR.</p>
+				   <p>[Organism:] honeybee OR quercus </p>
+	               <hr>
+	               <p>Keywords between categories are combined with the selected operator.</p>
+				   <p> ([Organism:] honeybee OR quercus) AND ([Environment:] forest OR grassland) </p>
+				   <hr>
+				    <p>Use quotes for terms that need to stay together.</p>
+				   <p>[Organism:] "Apis mellifera"</p>
+	              
+	           </div>
+	           <div *ngIf="componentUI === 'biodiv2'">
+			       <p><span class="italic">The system attempts to extend your search on synonyms of the keywords and more specific terms.</span></p>
+				   <p>Combine keywords per category with capitalized AND or capitalized OR.</p>
+				   <p>honeybee OR quercus </p>
+				   <p> (honeybee OR quercus) AND (forest OR grassland) </p>
+				   <hr>
+				    <p>Use quotes for terms that need to stay together</p>
+				   <p>"Apis mellifera"</p>
+	               <hr>
+	               <p><span class="italic">The system attempts to recognize the following categories:</span></p>
+	                <p><mat-icon class="filterIcon">local_florist</mat-icon>[Organism:] species, e.g., 'Apis mellifera', honeybee</p>
+			      	<p><mat-icon class="filterIcon">landscape</mat-icon>[Environment:] environmental terms, environmental terms, e.g., grassland, "shrub layer"</p>
+			      	<p><mat-icon class="filterIcon">dataset</mat-icon>[Quality:] phenotypes, data attributes, e.g., length, height, pH</p>
+			        <p><mat-icon class="filterIcon">cyclone</mat-icon>[Process:] biological and chemical processes, e.g., "nitrogen cycle"</p>
+			         <p><mat-icon class="filterIcon">science</mat-icon>[Material:] materials, substances, chemicals, e.g., sediment, CO2, nutrients</p>
+			     
+			      <!-- <hr><hr>
+		           <p><b>B) Category search:</b></p>
+		           <p><span class="italic">Keywords are not expanded = exact search</span></p>
+			       <p>Search for the whole category = all datasets that have matches in this category</p>
+				   <p>[Environment:] <span>&lcub;Environment&rcub;</span> </p>
+	               <hr>
+	               <p>Keyword search in a category</p>
+				   <p>[Environment:]"cold seep" IN &lcub;Environment&rcub;</p>
+				   <p>returns all the hits of "cold seep" that are contained in a hit of &lcub; Environment&rcub;</p>
+				   <hr>
+				   <p>Keyword search over a category</p>
+				   <p>[Environment:]"cold seep" OVER &lcub;Environment&rcub; </p>
+				   <p>returns all hits of "cold seep" that overlaps with a hit of &lcub; Environment&rcub; </p>-->
+	           </div>
+		  </div>
+	  
+      </div>
+     </div><br>
+     <div class="row"> 
+        <div class="col">     
+	  
+	 
+	     
+	     <button matTooltip="Explain the query" type="button" class="btn btn-secondary" *ngIf ="!showMore" (click)="showMoreClicked()">
+		  <div class="with-icons"><mat-icon inline=true>expand_more</mat-icon> Explanations</div>
+		 </button>
+		 <button matTooltip="Hide query explanation" type="button" class="btn btn-secondary" *ngIf ="showMore" (click)="hideClicked()">
+		  <div class="with-icons"><mat-icon inline=true>expand_less</mat-icon> Hide explanations</div>
+		 </button>
+		  <div *ngIf="showMore"><br>
+		       <p *ngIf="fullQuery === undefined || fullQuery === ''">
+		          <span class="italic">Your search is not expanded (exact search).</span>
+		      </p>
+		       <p *ngIf="fullQuery?.length>0">
+		          <span class="italic">Your search is expanded on synonyms and more specific terms.</span>
+		      </p>
+		      <div *ngIf="component==='biodiv1'">
+			      <div *ngFor='let qExplanation of queryExplanations; let i=index'> 
+				   
+				   <p *ngIf="qExplanation.query"><br><span><b>Query: </b></span>{{qExplanation.query}}</p>
+	               
+				   <p *ngIf="qExplanation.queryTerm"><span><b>Term: </b></span>{{qExplanation.queryTerm}}</p>
+			      
+			       <p *ngIf="qExplanation.synonyms"><span><b>Synonyms: </b></span>{{qExplanation.synonyms}}</p>
+			       <hr>
+		            </div>
+	            </div>
+	            
+	            
+	           <div *ngIf="componentUI === 'biodiv2'">
+	             
+		              <div *ngFor='let qExplanation of extendedQueryExplanations; let i=index'> 
+					   
+						   <p *ngIf="qExplanation.query"><br><span><b>Query: </b></span>{{qExplanation.query}}</p>
+			               
+						   <p *ngIf="qExplanation.queryTerm"><span><b>Term: </b></span>{{qExplanation.queryTerm}}</p>
+					      
+					       <!-- <p *ngIf="qExplanation.synonyms"><span><b>Synonyms: </b></span>{{qExplanation.synonyms}}</p>-->
+					       <div *ngFor='let URIsynonyms of qExplanation.URIs; let j=index'> 
+					        	<p *ngIf="URIsynonyms.URI"><span><b>Terminology: </b></span><a href="{{URIsynonyms.URI}}" title="Link to the {{URIsynonyms.terminology}} terminology, ID: {{URIsynonyms.ID}}" target="_blank">{{URIsynonyms.terminology}}_{{URIsynonyms.ID}}</a></p>
+					      
+					       		<p *ngIf="URIsynonyms.synonyms"><span><b>Synonyms: </b></span>{{URIsynonyms.synonyms}}</p>
+					       </div>
+					       <hr>
+			            </div>
+		     
+		          </div>
+		          <div *ngIf="componentUI === 'biodiv1'">
+				      <div *ngFor='let qExplanation of queryExplanations; let i=index'> 
+					   
+					   <p *ngIf="qExplanation.query"><br><span><b>Query: </b></span>{{qExplanation.query}}</p>
+		               
+					   <p *ngIf="qExplanation.queryTerm"><span><b>Term: </b></span>{{qExplanation.queryTerm}}</p>
+				      
+				       <p *ngIf="qExplanation.synonyms"><span><b>Synonyms: </b></span>{{qExplanation.synonyms}}</p>
+				       <hr>
+			            </div>
+		           </div>
+	            </div>
+		  </div>
+	  
+      </div>
+ </div>
+
+ 
+  <!-- <div class="explanations">
+	  <h1><span>Result Explanations</span></h1>
+  <div *ngFor='let rExplanation of resultExplanations'> 
+  <div class="explanationText">
+     {{rExplanation.value}} <br><br>
+     </div> 
+  </div>
+  </div>-->
+
+<!-- </div>-->

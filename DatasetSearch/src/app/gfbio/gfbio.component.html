@@ -1,0 +1,16 @@
+<div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <app-map [markers]="markers"></app-map>
+                <app-filters [result]="result" (filters)="filterSubmitted($event)" [resetFilters]="resetFilters"></app-filters>
+            </div>
+            <div class="col-md-9">
+                <app-search-input (searchKeyEmmit)="searchKeySubmitted($event)"></app-search-input>
+                <div class="mt-3">
+                    <app-search-result [result]="result"  [component]="component" (from)="paginationClicked($event)" (mapItem)="mapItems($event)"></app-search-result>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

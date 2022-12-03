@@ -1,0 +1,53 @@
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+
+<app-search-input-semantic [component]="component" [queryInterpretation]="queryInterpretation" (searchKeyEmit)="searchKeySubmitted($event)" (radioEvent)="radioChanged($event)"></app-search-input-semantic>
+
+
+
+                <div>
+                    <app-search-result [result]="result" [component]="component" (basket)="checkBox($event)" (from)="paginationClicked($event)"></app-search-result>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+
+
+                 <app-messages [queryExplanations]="queryExplanations"
+                              [extendedQueryExplanations]="extendedQueryExplanations"
+                              [resultExplanations]="resultExplanations"
+                              [component]="component"
+                              [fullQuery]="fullQuery"></app-messages>
+
+                <hr>
+
+                <div>
+                   <!-- <div *ngIf="result !== undefined" >
+                       <span>Highlight biological entities: </span>
+                       <mat-form-field appearance="fill">
+                           <mat-label>type</mat-label>
+                           <mat-select [formControl]="toppings" multiple (selectionChange)="changeType($event)">
+                               <mat-option *ngFor="let topping of type" [value]="topping">{{topping}}</mat-option>
+                           </mat-select>
+                       </mat-form-field>
+                   </div>-->
+                    <!--                    <mat-form-field appearance="fill">-->
+                    <!--                        <mat-label>type </mat-label>-->
+                    <!--                        <mat-select [(value)]="selectedType" (selectionChange)="changeType($event)">-->
+                    <!--                            <mat-option *ngFor="let item of type" [value]="item" >-->
+                    <!--                                {{item}}-->
+                    <!--                            </mat-option>-->
+                    <!--                        </mat-select>-->
+                    <!--                    </mat-form-field>-->
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+

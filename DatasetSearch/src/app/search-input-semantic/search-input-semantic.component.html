@@ -1,0 +1,89 @@
+
+<div class="container-fluid">
+     
+     <form #semanticSearchInput = "ngForm" (ngSubmit)="onSubmit(semanticSearchInput.value)" autocomplete="off">
+     <div class="row"> 
+        <div class="col-md-9" text-center>
+    
+        <input type="text" [(ngModel)]="searchKey" [placeholder]="placeholder" (ngModelChange)="onSuggest()" class="searchInput"
+               id="searchField" name="biodiv2semanticInput">
+        
+          <div class="radioANDOR"><mat-radio-group (change)="onSelectionChange($event)" >  
+				  <mat-radio-button value="AND" checked #and>AND search</mat-radio-button>&nbsp;
+				  <mat-radio-button value="OR" #or>OR search</mat-radio-button>  
+				 
+			</mat-radio-group> 
+		  </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+        	<div class="col">
+		        <button type="submit" class="btn btn-primary btn-blue"><img src="{{semSearchImg}}"
+		                                                                                         height="18"> search
+		        </button>
+	        </div>
+        </div>
+         <br>
+            <div class="row">
+            <div class="col">
+            	<!-- <mat-radio-group (change)="onSelectionChange($event)">  
+				  <mat-radio-button value="AND" checked #and>AND search</mat-radio-button>  
+				  <mat-radio-button value="OR" #or>OR search</mat-radio-button>  
+				 
+				</mat-radio-group> -->
+            </div></div>
+    </div>
+    
+    
+    <div class="position-relative">
+        <div class="suggestion-window" *ngIf="windowSuggestion">
+            <app-suggestion-window (windowSuggestKey)="onWindowSuggestKey($event)"
+                                   (isClicked)="windowSuggestion = false"></app-suggestion-window>
+        </div>
+    </div>
+    <div class="text-danger ml-1" *ngIf="alertSearch">
+        <div>please do not use these special characters for simple search:</div>
+        <div>!@#$%^&_+-=[];':\|,<>/?&#123;&#125;</div>
+    </div>
+    <div class="text-danger ml-1" *ngIf="alertSemanticSearch">
+        <div>please do not use these special characters for semantic search:</div>
+        <div>!@#$%^&_+-=[];':"\|,<>/?*&#123;&#125;</div>
+    </div>
+    
+    </div>
+    <div class="row">
+    	<div class="col">
+	    	<p *ngIf="queryInterpretation?.length>0">
+	    	    <button matTooltip="Display the query interpretation" type="button" class="btn btn-secondary" *ngIf ="!showMore" (click)="queryInterpretationClicked()">
+				  <div class="with-icons"><mat-icon inline=true>expand_more</mat-icon> Query interpretation</div>
+				</button>
+	    	    <button matTooltip="Hide the query interpretation" type="button" class="btn btn-secondary" *ngIf ="showMore" (click)="hideQueryInterpretationClicked()">
+				  <div class="with-icons"><mat-icon inline=true>expand_less</mat-icon> Hide query interpretation</div>
+				</button>
+	    		<!-- <b>Query interpretation:</b> <br>-->
+	    	</p>
+	    	 <div *ngIf="showMore">
+	   	      <!--  <div *ngFor='let queryComponent of queryInterpretation; let i=index'><hr> 
+	   	           <mat-icon class="filterIcon">{{queryComponent.icon}}</mat-icon>[{{queryComponent.type}}] {{queryComponent.term}}<br>
+	   	         <div *ngFor='let instance of queryComponent.instances; let j=index'>
+	   	           <a href="{{instance.URI}}" title="Link to URI: {{instance.URI}}" target="_blank" (click)="reviseURI(instance.URI)">{{instance.URI}}</a>
+	   	         </div> 
+	   	         
+	   	      </div>-->
+	   	      <div *ngFor='let queryComponent of revisedQueryInterpretation; let i=index'><hr> 
+	   	           <mat-icon class="filterIcon">{{queryComponent.icon}}</mat-icon>[{{queryComponent.type}}] {{queryComponent.term}}<br>
+	   	         <div *ngFor='let instance of queryComponent.instances; let j=index'>
+	   	          Terminology: {{instance.terminology}}, ID: <a href="{{instance.URI}}" title="Link to terminology {{instance.terminology}}_{{instance.ID}}" target="_blank"> {{instance.ID}}</a>
+	   	         </div> 
+	   	         
+	   	      </div>
+	   	      
+	    	</div>
+	    	
+    	</div>
+    </div>
+    </form>
+</div>
+
+<hr>
+

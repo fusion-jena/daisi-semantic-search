@@ -1,0 +1,97 @@
+<div>
+    <!-- <div class="my-2">-->
+    <div class="row">
+            <div class="col-md-9">
+		<span *ngFor="let label of item.getUpperLabels()">
+					<span class="labeling" [ngClass]="label.getColorClass()" [matTooltip]="label.getTooltip()"
+                          matTooltipClass="result-item-tooltip">{{ label.getInnerInfo()}}</span>
+		</span>
+		</div>
+		<div class="col-md-3">
+		  <button matTooltip="show biological entities" class="labeling bg-darkblue" *ngIf ="!showBiodiv" (click)="showBiodivEntities(item)">
+		                 <div class="with-icon" text-center>
+			                <mat-icon inline=true>visibility</mat-icon>
+			                &nbsp;&nbsp;Biological entities
+		                 </div>
+		            </button>
+		   <button matTooltip="hide biological entities" type="button" class="labeling bg-darkblue" *ngIf ="showBiodiv" (click)="hideBiodivButtonClicked()">
+		  		<div class="with-icons"><mat-icon inline=true>visibility_off</mat-icon> &nbsp;&nbsp;Hide entities</div>
+		 	</button>
+		</div>
+	</div>
+<br>
+   <!--  </div>-->
+
+<div class="row">
+            <div class="col">
+    <div class="d-flex justify-content-between line-bottom">
+        <div class="pl-0 pb-3 d-flex">
+            <div class="colorBox" [style.background-color]="item.getColor()"></div>
+            <div>
+                <!-- <div [matTooltip]="item.getTitleTooltip()" matTooltipClass="result-item-tooltip">-->
+                <div class="resultTitle">
+                    <!-- <div *ngIf="item.getTitleUrl() === 'undefined'" [innerHTML]="item.getTitle()"></div>-->
+                    <a *ngIf="item.getTitleUrl() !== 'undefined'" href="{{item.getTitleUrl()}}" target="_blank" (click)="clickOnTitle(item.getId(),item.getTitle(),item.getTitleUrl(),item.getRank())">
+                        <div *ngIf="!showBiodiv" [innerHTML]="item.getTitle()"></div>
+                        <div *ngIf="showBiodiv" [innerHTML]=item.getBiodivTitle()></div>
+                       
+                    </a>
+                </div>
+         
+                <div *ngFor="let des of item.getDescription(); let i=index">
+                    <app-description [des]="des" [showBiodiv]="showBiodiv"></app-description>
+                </div>
+               
+                <div class="mt-2">
+                    <!--Grey elements in result item-->
+                    <div class="d-inline-block">
+                        <div *ngFor="let licence of item.getLicence()" class="d-inline-block pr-2 result-item-grey">
+                            <img *ngIf="licence !== 'Other' && licence !== 'All rights reserved'"
+                                 src="{{imagePath}}{{licence+ '.png'}}"
+                                 class="license-img" matTooltip="License: {{ licence}}"
+                                 matTooltipClass="result-item-tooltip">
+                            <span *ngIf="licence === 'Other'" matTooltip="Custom license"
+                                  matTooltipClass="result-item-tooltip"><svg width="2em" height="2em"
+                                                                             viewBox="0 0 16 16"
+                                                                             class="bi bi-award" fill="currentColor"
+                                                                             xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd"
+        d="M9.669.864L8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193l-1.51-.229L8 1.126l-1.355.702-1.51.229-.684 1.365-1.086 1.072L3.614 6l-.25 1.506 1.087 1.072.684 1.365 1.51.229L8 10.874l1.356-.702 1.509-.229.684-1.365 1.086-1.072L12.387 6l.248-1.506-1.086-1.072-.684-1.365z"/>
+  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+</svg></span>
+                            <span *ngIf="licence === 'All rights reserved'" matTooltip="All rights reserved"
+                                  matTooltipClass="result-item-tooltip">All rights reserved</span>
+                        </div>
+                    </div>
+                    <img *ngIf="item.getVat()" src="{{vatImg}}" class="vat-img pr-2"
+                         [matTooltip]="item.getVatTooltip()" matTooltipClass="result-item-tooltip">&nbsp;
+                    <!--Blue elements in result item-->
+                    <span *ngIf="item.getCitation().getSource() !== undefined && item.getCitation().getSource() !== '' && item.getCitation().getCreator() !== []" (click)="openDialog(itemId)" class="pr-2 result-item-blue" matTooltip="Show citation"
+                          matTooltipClass="result-item-tooltip"><span><fa-icon class="fa-sm"
+                                                                               [icon]="faQuoteLeft"></fa-icon></span> Citation </span>
+                    <span *ngFor="let obj of item.getMultimediaObjs()" class="pr-2 vertical-middle">
+	                                <a *ngIf="obj.type === 'sound'" [href]="sanitize(obj.url)" target="_blank"
+                                       matTooltip="This dataset provides a sound file."
+                                       matTooltipClass="result-item-tooltip"><fa-icon
+                                            [icon]="faVolumeUp"></fa-icon> Sound </a>
+	                            <a *ngIf="obj.type === 'video'" [href]="sanitize(obj.url)" target="_blank"
+                                   matTooltip="This dataset provides a video." matTooltipClass="result-item-tooltip"><fa-icon
+                                        [icon]="faVideo"></fa-icon> Video </a>
+	                            <a *ngIf="obj.type === 'picture'" [href]="sanitize(obj.url)" target="_blank"
+                                   matTooltip="This dataset provides an image." matTooltipClass="result-item-tooltip"><fa-icon
+                                        [icon]="faImage"></fa-icon> Image </a>
+	                            </span>
+
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <div class="form-group form-check">
+                <input (change)="checkBox(itemId, $event.target)" type="checkbox" class="regular-checkbox big-checkbox"
+                       [checked]="item.getCheckBox()"  matTooltip="Add this dataset to the basket.">
+            </div>
+        </div>
+    </div>
+    </div></div>
+</div>

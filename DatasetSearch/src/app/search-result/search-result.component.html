@@ -1,0 +1,64 @@
+<div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+
+                <div class="basket mb-3" (click)="basketClick()">
+                    <div class="basket-img">
+                        <img src="assets/img/basket.png" class="w-100">
+                        <span class="basket-number Absolute-Center">{{basketValues.length}}</span>
+                    </div>
+                    <span class="basket-text">Dataset Basket</span>
+                </div>
+            </div>
+            <div class="col-md-9" text-center>
+                <div *ngIf="result?.getHits()?.length!== 0">
+                    <app-pagination [result]="result" (paginationClicked)="paginationClicked($event)"></app-pagination>
+                </div>
+            </div>
+
+        </div>
+
+        <div *ngIf="result?.getHits()?.length=== 0" class="alert alert-warning" role="alert">
+            <div class="row">
+                <div class="col-md-9">
+                    <span><p>No entries found. Have you tried an 'OR' search?</p> </span>
+                </div>
+
+                <!-- <div class="col-md-3">
+                    <button type="button" class="btn btn-primary btn-blue" (click)="OR()"><img src="{{semSearchImg}}"
+                                                                                               height="18"> or search
+                    </button>
+                </div>-->
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div *ngIf="result?.getSemanticKeys()?.length>0" class="alert alert-info" role="alert">
+                <span>Expanded terms: </span>
+                <div *ngFor="let item of result?.getSemanticKeys()" class="highlightedKey">
+
+                    <!-- only display a context-box for the hovered semantic key -->
+                    <div (mouseover)="popoverVisible=item" (mouseleave)="popoverVisible=''">
+                        {{item}}
+                        <div [hidden]="popoverVisible!=item">
+                            <app-context-box [term]="item" [termData]="result?.getTermData()"></app-context-box>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <ngx-spinner></ngx-spinner>
+        <div class="row">
+            <div *ngIf="result?.getHits()?.length!==0">
+                <div *ngFor="let item of result?.getHits(); let i=index" class="pt-1">
+                    <app-result-item [item]="item" [itemId]="i" [component]=component
+                                     (checkBoxItem)="checkBoxClick($event)"></app-result-item>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

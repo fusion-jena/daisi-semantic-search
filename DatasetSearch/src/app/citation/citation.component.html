@@ -1,0 +1,28 @@
+<div>
+    <div mat-dialog-title class="flex-container">
+		
+			<span class="dialog-title">
+				Citation
+			</span>
+			<button mat-button class="close-icon" [mat-dialog-close]="true">
+				<mat-icon>close</mat-icon>
+			</button>
+	</div>
+    <mat-dialog-content class="mat-typography">
+        <div *ngIf="result.getDataCenter() == 'PANGAEA'">
+			<span class="font-weight-bold" *ngFor="let creator of result.getCreator()">{{creator}}, </span> 
+			<span class="font-weight-bold">({{result.getPubYear()}}):</span> 
+			{{result.getTitle()}},    <a *ngIf="result.getDOI() !== 'undefined'" href="{{result.getDOI()}}" target="_blank">{{result.getDOI()}}</a>
+        </div>
+		<div *ngIf="result.getDataCenter() == 'GATERSLEBEN'">
+			<span class="font-weight-bold" *ngFor="let creator of result.getCreator()">{{creator}}, </span> 
+			<span class="font-weight-bold">({{result.getPubYear()}}):</span> 
+			{{result.getTitle()}},    <a *ngIf="result.getDOI() !== 'undefined'" href="{{result.getDOI()}}" target="_blank">{{result.getDOI()}}</a>
+        </div>
+				  
+        <div *ngIf="result.getSource() !== undefined">
+            {{result.getSource()}}
+        </div>
+    </mat-dialog-content>
+    
+</div>

@@ -1,0 +1,6 @@
+<div>
+    <div class="transparentWindow"></div>
+    <div class="windowBox">
+        <div *ngFor="let item of suggest" class="option" (click)="chooseSuggestion(item.text)"> {{item.text}}</div>
+    </div>
+</div>

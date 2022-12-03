@@ -1,0 +1,11 @@
+<div class="position-relative">
+    <div class="toolbarMenu">
+            <a *ngFor="let index of indexes" routerLink="{{index.link}}" routerLinkActive="toolbarMenuItemActive" class="toolbarMenuItem"
+               [routerLinkActiveOptions]="{exact:true}">{{index.key}}</a>
+           <!-- <a *ngIf="userProfile" class="toolbarMenuItem" (click)="logout()">Log out</a>
+            <a *ngIf="!userProfile" class="toolbarMenuItem" (click)="login()">Log in</a>-->
+    </div>
+    <div class="p-3 mt-menu">
+        <router-outlet></router-outlet>
+    </div>
+</div>

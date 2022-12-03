@@ -1,0 +1,11 @@
+{
+  "/api/*": {
+    "target": "https://semsearch.fmi.uni-jena/daisi-api",
+    "secure": false,
+    "logLevel": "debug",
+	"changeOrigin":true,
+	"pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

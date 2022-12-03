@@ -1,0 +1,35 @@
+{
+  "name": "test",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest",
+    "api"
+  ],
+  "dependencies": {
+    "axios": "^0.21.4",
+    "body-parser": "^1.19.0",
+    "cartesian-product-multiple-arrays": "^1.0.9",
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
+    "elasticsearch": "^16.7.1",
+    "express": "4.17.1",
+    "express-session": "^1.17.2",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.7.1",
+    "keycloak-connect": "^12.0.4",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "node-blob": "0.0.2",
+    "node-zip": "^1.0.1",
+    "sequelize": "^6.16.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0"
+  }
+}

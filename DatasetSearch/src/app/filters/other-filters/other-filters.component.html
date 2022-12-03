@@ -1,0 +1,10 @@
+<div>
+    <div *ngFor="let item of filter">
+
+        <label for="{{item.id}}" class="pl-2 linkBlue m-0">
+            <input id="{{item.id}}" type="checkbox"
+                   (click)="sendFilter(item.parameterValue,item.parameterType, item.label)"
+                   [checked]="item.checked">
+            {{item.label}} </label>
+    </div>
+</div>

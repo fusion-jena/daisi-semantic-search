@@ -1,0 +1,78 @@
+<div>
+                <mat-accordion>
+                    <mat-expansion-panel  class="mt-3" [expanded]="openChart">
+                        <mat-expansion-panel-header class="card-header" style="height: 40px">
+                            filters
+
+                        </mat-expansion-panel-header>
+                        <div class="pt-2">
+                            <div class="mb-3">
+                                <span class="ml-2 linkBlue" (click)="onClearAllFilters()">Clear All Filters</span>
+                            </div>
+                            <div class="my-3">
+                                <mat-chip-list aria-label="article selection" class="mat-chip-list-stacked">
+                                    <div *ngFor="let item of filterValues; let i=index">
+                                        <mat-chip [selectable]="false"
+                                                  [removable]="true" (removed)="removeFilter(i)" class="h-auto">
+                                            {{item}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
+                                    </div>
+                                </mat-chip-list>
+                            </div>
+                            <div *ngFor="let item of result?.getAggregations(); let i=index">
+                                <mat-accordion>
+                                    <mat-expansion-panel class="mt-3" [expanded]="openChart">
+                                        <mat-expansion-panel-header class="card-header" style="height: 40px">
+                                            <div class="row">
+                                                <div class="col-1 col-md-1">
+                                                    <mat-icon class="filterIcon">{{item.getIcon()}}</mat-icon>
+                                                </div>
+                                                <div class="col-auto col-md-auto">
+                                                    {{item.getTitle()}}
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel-header>
+                                        <div class="pt-2">
+                                            <app-filter-box [filters]="item"
+                                                            (chosenFacet)="sendFilter($event)"></app-filter-box>
+                                        </div>
+
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                            </div>
+                            <div *ngFor="let item of result?.getOtherFilters()">
+                                <mat-accordion>
+                                    <mat-expansion-panel  class="mt-3" [expanded]="openChart">
+                                        <mat-expansion-panel-header class="card-header" style="height: 40px">
+                                            <div class="row">
+                                                <div class="col-1 col-md-1">
+                                                    <mat-icon class="filterIcon">{{item.icon}}</mat-icon>
+                                                </div>
+                                                <div class="col-auto col-md-auto">
+                                                    {{item.title}}
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel-header>
+                                        <div class="pt-2">
+                                            <app-other-filters [filter]="item.parameters" [filterValues] = "filterValues"
+                                                               (chosenFilter)="sendFilter($event)"></app-other-filters>
+                                        </div>
+
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                            <div *ngFor="let datePicker of result?.getDatePickers()">
+                                <app-filter-date-picker [datePicker]="datePicker" [filters] = "chosenFilter" [filterValues] = "filterValues"
+                                                        (chosenDate)="applyDate($event,datePicker)"></app-filter-date-picker>
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+</div>

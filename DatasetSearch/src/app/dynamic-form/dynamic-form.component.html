@@ -1,0 +1,34 @@
+<div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+		<div class="container-fluid">
+     		<div class="row"> 
+        		<div class="col-md-9">
+			        <div *ngFor="let question of questions">
+			            <app-dynamic-form-question [question]="question" [form]="form" (termsEvent)="receiveTerms($event)" class="w-100"></app-dynamic-form-question>
+			            <br>
+			        </div>
+				</div>
+				<div class="col-md-3">
+			            
+			            <div class="row">
+			            <div class="col">
+			               <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-blue"><img src="{{semSearchImg}}"
+			                                                                                      height="18"> search</button>
+			            </div>
+			            </div>
+			            <br>
+			            <div class="row">
+			            <div class="col">
+			            	<mat-radio-group (change)="onSelectionChange($event)">  
+							  <mat-radio-button value="AND" checked #and>AND search</mat-radio-button>  
+							  <mat-radio-button value="OR" #or>OR search</mat-radio-button>  
+							 
+							</mat-radio-group> 
+			            </div></div>
+			       
+			    </div>
+			</div>
+		</div>
+    </form>
+</div>

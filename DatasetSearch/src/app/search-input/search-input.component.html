@@ -1,0 +1,46 @@
+
+<div class="container-fluid">
+     
+     <form action="#" (ngSubmit)="onSearch()" autocomplete="off">
+     <div class="row"> 
+        <div class="col-md-6" text-center>
+    
+        <input type="text" [(ngModel)]="searchKey" (ngModelChange)="onSuggest()" class="searchInput"
+               id="searchField" name="gfbioSearch">
+        
+    
+    </div>
+    <div class="col-md-3">
+    <button type="submit" class="btn btn-primary btn-blue">
+            <fa-icon [icon]="faSearch" class="fa-lg text-white" id="button"></fa-icon>
+            search
+        </button>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary btn-blue" (click)="semantic()"><img src="{{semSearchImg}}"
+                                                                                         height="18"> search
+        </button>
+        
+    </div>
+    
+    
+    <div class="position-relative">
+        <div class="suggestion-window" *ngIf="windowSuggestion">
+            <app-suggestion-window (windowSuggestKey)="onWindowSuggestKey($event)"
+                                   (isClicked)="windowSuggestion = false"></app-suggestion-window>
+        </div>
+    </div>
+    <div class="text-danger ml-1" *ngIf="alertSearch">
+        <div>please do not use these special characters for simple search:</div>
+        <div>!@#$%^&_+-=[];':\|,<>/?&#123;&#125;</div>
+    </div>
+    <div class="text-danger ml-1" *ngIf="alertSemanticSearch">
+        <div>please do not use these special characters for semantic search:</div>
+        <div>!@#$%^&_+-=[];':"\|,<>/?*&#123;&#125;</div>
+    </div>
+    
+    </div>
+    </form>
+</div>
+
+<hr>

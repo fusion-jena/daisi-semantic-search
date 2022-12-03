@@ -1,0 +1,116 @@
+<div class="position-relative">
+    <div class="bg-spinner" *ngIf="spinner"></div>
+    <div class="Absolute-Center" *ngIf="spinner">
+        <img src="assets/gif/loading-icon.jpg" alt="" width="50">
+    </div>
+    <div>
+        <!--<button class="btn btn-close" mat-dialog-close><mat-icon inline=true>close</mat-icon> close</button>-->
+        <div mat-dialog-title class="flex-container">
+
+			<span class="dialog-title">
+				Dataset Basket
+			</span>
+            <button mat-button class="close-icon" [mat-dialog-close]="[data]" cdkFocusInitial>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="container-fluid">
+        <div class="row"> 
+        <div mat-dialog-content>
+        
+           
+            <div class="p-4">
+                <table class="mat-table" id="table" *ngIf="data.length!==0">
+                    <thead>
+                    <tr class="mat-header-row">
+                        <th class="mat-header-cell" scope="col">Your selected datasets</th>
+                        <th class="mat-header-cell" scope="col">Visualizable in VAT</th>
+                        <th class="mat-header-cell" scope="col">Description</th>
+                        <th class="mat-header-cell" scope="col">Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="mat-row" *ngFor="let item of data">
+                        <td class="mat-cell"><span class="overFlowText w-200p"
+                                                   [innerHTML]="item.getTitle()" matTooltip="{{item.getCleanTitle()}}"></span>
+                        </td>
+                        <td class="mat-cell">
+                            <span *ngIf="!item.getVat()" matTooltip="{{textTooltipBasketVATnotVisualizable}}" class="text-danger"><mat-icon>cancel</mat-icon></span>
+                            <span *ngIf="item.getVat()" matTooltip="{{textTooltipBasketVATvisualizable}}" class="text-success"><mat-icon>check</mat-icon></span>
+                        </td>
+                        <td class="mat-cell">
+                            <div *ngIf="item.getLinkage().getData(); then thenBlockData else elseBlockData"></div>
+                            <ng-template #thenBlockData>
+                                <span matTooltip="{{textTooltipBasketDataAvailable}}" class="px-1"><i class="fas fa-table"></i></span>
+                            </ng-template>
+                            <ng-template #elseBlockData>
+                                <span matTooltip="{{textTooltipBasketDataNotAvailable}}" class="half-opacity px-1"><i class="fas fa-table"></i></span>
+                            </ng-template>
+                            <div *ngIf="item.getLinkage().getMetadata(); then thenBlockMeta else elseBlockMeta"></div>
+                            <ng-template #thenBlockMeta>
+                                <span matTooltip="{{textTooltipBasketMetadataAvailable}}" class="px-1"><i class="fas fa-info-circle"></i></span>
+                            </ng-template>
+                            <ng-template #elseBlockMeta>
+                                <span matTooltip="{{textTooltipBasketMetadataNotAvailable}}" class="half-opacity px-1"><i class="fas fa-info-circle"></i></span>
+                            </ng-template>
+                            <div *ngIf="item.getLinkage().getMultimedia(); then thenBlockMedia else elseBlockMedia"></div>
+                            <ng-template #thenBlockMedia>
+                                <span matTooltip="{{textTooltipBasketMultimediaAvailable}}" class="px-1"><i class="fas fa-photo-video"></i></span>
+                            </ng-template>
+                            <ng-template #elseBlockMedia>
+                                <span matTooltip="{{textTooltipBasketMultimediaNotAvailable}}" class="half-opacity px-1"><i class="fas fa-photo-video"></i></span>
+                            </ng-template>
+                        </td>
+                        <td class="mat-cell">
+                            <button (click)="remove(item)" class="iconButton">
+                                <mat-icon class="text-danger" matTooltip="{{textTooltipBasketRemove}}">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-danger" *ngIf="data.length === 0">{{textTooltipBasketEmpty}}</div>
+            </div>
+        </div>
+        </div>
+       
+        <mat-dialog-actions align="end" class="mt-3">
+             <div class="container-fluid">
+                <div class="row">
+                
+                <div class="col-md">
+	             <button title="delete basket" class="btn btn-danger" (click)="emptyBasket()" [disabled]="data.length===0">
+		         	<div class="with-icon">
+		                <mat-icon inline=true >delete</mat-icon>&nbsp;delete
+		           	</div>     
+		           </button>
+	          </div>
+	         <div class="col-md">
+		             <!--<button title="save basket" class="btn btn-success" (click)="saveBasket()" [disabled]="checkSaveButton()" *ngIf="data.length !== 0">
+		                 <div class="with-icon" text-center>
+			                <mat-icon inline=true>check</mat-icon>
+			                <span *ngIf="checkSaveButton()" >&nbsp;saved</span>
+			                <span *ngIf="!checkSaveButton()" >&nbsp;save</span>
+		                 </div>
+		            </button>-->
+	         </div>   
+	        
+	           <div class="col-md">
+	            <button title="download basket" class="btn btn-blue" (click)="downloadZip()" [disabled]="data.length===0">
+	               <div class="with-icon">
+	                <mat-icon inline=true>download</mat-icon>&nbsp;download
+	               </div>
+	            </button>
+	           </div>
+	            <!-- <button class="btn btn-primary btn-blue" (click)="visualize()" [disabled]="!checkSaveButton()" *ngIf="data.length !== 0">
+	                <mat-icon inline=true>download</mat-icon>
+	                get basketId
+	            </button> -->
+          </div>
+          </div>
+        </mat-dialog-actions>
+        
+        </div>
+    </div>
+</div>
+

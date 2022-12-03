@@ -1,0 +1,21 @@
+<!-- <div class="d-flex">
+    <div class="mr-2">{{des.getTitle()}}</div>-->
+<div class="row">
+    <div class="mr-2">{{des.getTitle()}}</div>
+    <div>
+        <div *ngIf="!showBiodiv" [innerHTML]="des.getValue()" [ngClass]="{'showLess':!showLess(des.getValue().length)}"
+             class="d-inline-block"></div>
+        
+        <div *ngIf="showBiodiv" [innerHTML]="des.getBiodivValue()" [ngClass]="{'showLess':!showLess(des.getValue().length)}"
+             class="d-inline-block"></div>
+        
+        <span *ngIf="des.getValue()?.length>600" style="vertical-align: super">
+                            <span class="linkBlue" *ngIf="!showMore" (click)="showMore=true">
+                                [+]
+                            </span>
+                            <span class="linkBlue" *ngIf="showMore" (click)="showMore=false">
+                                [-]
+                            </span>
+                        </span>
+    </div>
+</div>

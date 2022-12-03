@@ -1,0 +1,39 @@
+<div [formGroup]="form">
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+           <mat-panel-title>
+                <mat-icon class="filterIcon">{{question.icon}}</mat-icon>
+                <label [attr.for]="question.key">{{question.label}}</label>
+            </mat-panel-title>
+            <!-- <mat-panel-description>
+                {{panelOpenState ? '' : 'open the panel to search in '+ question.label}}
+            </mat-panel-description>-->
+        </mat-expansion-panel-header>
+        <div [ngSwitch]="question.controlType">
+            <input *ngSwitchCase="'textbox'" [formControlName]="question.key" class="searchInput"
+                   [id]="question.key" [type]="question.type" [placeholder]="question.placeholder" (ngModelChange)="onSuggest()" autocomplete="off">
+
+ <!-- <mat-autocomplete #auto="matAutocomplete">
+  <mat-option *ngFor="let term of terms | async" [value]="validate(term.label)">
+    <span>{{ term.label}}</span>
+  </mat-option>
+</mat-autocomplete>-->
+
+ 
+           
+            <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+                <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+            </select>
+
+        </div>
+    </mat-expansion-panel>
+    <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+</div>
+
+<div class="position-relative">
+        <div class="suggestion-window" *ngIf="windowSuggestion">
+            <app-suggestion-window (windowSuggestKey)="onWindowSuggestKey($event)"
+                                   (isClicked)="windowSuggestion = false"></app-suggestion-window>
+        </div>
+    </div>

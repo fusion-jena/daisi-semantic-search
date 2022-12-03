@@ -1,0 +1,18 @@
+<div>
+    <div *ngFor="let filter of filters.getFacets(); let i=index">
+        <div [ngClass]="{'d-none':!showLess(i)}">
+            <label for="id-{{filter.getKey()}}" class="pl-2 linkBlue m-0">
+                <input id="id-{{filter.getKey()}}" type="checkbox" (click)="sendFacet(filter.getKey(),filters.getId()+'Facet')"
+                       [checked]="filter.getChecked()">
+                {{filter.getKey()}} ({{filter.getDocCount()}})</label>
+        </div>
+    </div>
+    <div *ngIf="filters.getFacets()?.length>5">
+        <div class="linkBlue" *ngIf="!showMore" (click)="showMore=true">... show
+            more
+        </div>
+        <div class="linkBlue" *ngIf="showMore" (click)="showMore=false">... show
+            less
+        </div>
+    </div>
+</div>

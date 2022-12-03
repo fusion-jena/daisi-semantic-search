@@ -1,0 +1,141 @@
+<div *ngIf="displayData != undefined && displayData.length > 0" style="position: absolute; color: grey;">
+
+
+    <mat-card class="content-box">
+
+        <mat-card-content>
+
+            <div *ngFor="let data of displayData; let i = index">
+
+                <!--    Display data label for every Element
+                        but only display the info box for the first element -->
+
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <div *ngIf="data.label != undefined">
+                                {{data.label}}
+                            </div>
+                        </h4>
+                    </div>
+                    <div class="col-2 offset-md-4" *ngIf="i == 0">
+                        <mat-icon
+                            class="unselectable"
+                            style="color: var(--darkgrey); font-size: 33px;"
+                            [matTooltip]="infoText"
+                            matTooltipClass="result-item-tooltip"
+                            matTooltipPosition="below"
+                        >
+                            info
+                        </mat-icon>
+                    </div>
+                </div>
+
+                <!-- Display data description, uri, source and synonyms/commonNames -->
+
+                <div *ngIf="data.description != undefined">
+                    {{data.description}}
+                </div>
+
+                <div *ngIf="data.uri != undefined">
+                    
+                        URI:
+                        <!--<a target="_blank" style="opacity: 100%; color: var(--darkblue);" href={{data.uri}}>
+                            {{data.uri}}
+                        </a>-->
+						 <a target="_blank" class="linkWidgetBlue" href={{data.uri}}>
+                            {{data.uri}}
+                        </a>
+                    
+                </div>
+
+                <div *ngIf="data.sourceTerminology != undefined">
+                    Source:
+                    {{data.sourceTerminology}}
+                </div>
+
+                <div *ngIf="data.synonyms != undefined">
+					Synonyms:
+                    <span *ngFor="let synonym of data.synonyms; let i = index">
+                        <span *ngIf="i != 0">, </span>
+                        {{synonym}}</span>
+                </div>
+                <div *ngIf="data.commonNames != undefined">Synonyms:
+                    <span *ngFor="let commonNames of data.commonNames; let i = index">
+                        <span *ngIf="i != 0">, </span>
+                        {{commonNames}}</span>
+                </div>
+
+                <!-- Display a narrower and broader button if the data is internal -->
+<br>
+                <div class="row" *ngIf="data.internal != undefined && data.internal == 'true'">
+                    <div class="col-4">
+                        <button class="btn-blue" mat-flat-button (click)="narrow(data.sourceTerminology, data.uri)">
+                            <mat-icon>close_fullscreen</mat-icon>
+                            Narrower
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn-blue" mat-flat-button (click)="broad(data.sourceTerminology, data.uri)">
+                            <mat-icon>zoom_out_map</mat-icon>
+                            Broader
+                        </button>
+                    </div>
+                    <div class="col-2 offset-md-2">
+                        <mat-spinner diameter="35" *ngIf="loading && data.uri == searchUri"></mat-spinner>
+                        <!-- Switch the expand icon based on a click -->
+                        <mat-icon
+                            style="font-size: 35px;"
+                            (click)="showSearchInformation = !showSearchInformation;
+                                    icon == 'expand_less' ? icon='expand_more' : icon='expand_less'"
+                            *ngIf="!loading && data.uri == searchUri && searchData != undefined && searchData.length > 0"
+                            class="unselectable"
+                        >
+                            {{icon}}
+                        </mat-icon>
+                    </div>
+                </div>
+
+
+                <!--    If the user pressed the broader or narrower button
+                        the data is loaded into searchData and displayed here
+                        using another mat-card
+                -->
+
+
+                <div
+                    *ngIf="searchData != undefined && searchData.length > 0 && showSearchInformation &&
+                    !loading && data.uri == searchUri"
+                >
+
+                    <mat-card class="inner-box ml-n1">
+                        <mat-card-content>
+
+                            <div *ngFor="let data of searchData; let i = index">
+
+                                <div *ngIf="data.label != undefined">
+
+                                    <span (dblclick)="onDoubleClick(data.label)" (click)="onClick(data.uri)"
+                                          [className]="searchClass"
+                                    >
+                                        {{data.label}}
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+                <div *ngIf="i < displayData.length-1" class="mb-2 mt-3">
+                    <mat-divider  [inset]="true"></mat-divider>
+                </div>
+
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+
+</div>

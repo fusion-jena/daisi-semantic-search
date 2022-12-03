@@ -7,7 +7,7 @@ The Node middleware server handles the index requests and provides a convinent A
 * [Angular app] 
 * [Node Server] 
 
-[Angular app]: https://github.com/fusion-jena/DatasetSearchUI/tree/master/angular
+[Angular app]: https://github.com/fusion-jena/daisi-semantic-search/tree/main/DatasetSearch
 [Node Server]: https://github.com/fusion-jena/DatasetSearchUI/tree/master/node
 
 ## Extension

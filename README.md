@@ -1,5 +1,7 @@
 # [Dai:Si] - Semantic Search Extension
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7394890.svg)](https://doi.org/10.5281/zenodo.7394890)
+
 This repository provides an extended version of [Dataset Search UI - Dai:Si](https://github.com/fusion-jena/DaiSi) - an application that provides a user interface for querying a dataset search index. 
 It consists of two parts: a backend server (Node Server) and a frontend (Angular application). 
 The Node middleware server handles the index requests and provides a convinent API for the frontend - a modular Angular app that can be easily adjusted for a specific domain. 

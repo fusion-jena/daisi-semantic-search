@@ -22,7 +22,7 @@ The extension comprises:
 
 ## Demo
 
-A live demo is available here: https://semsearch.uni-jena.de/daisi/
+A live demo is available here: https://semsearch.fmi.uni-jena.de/daisi/
 
 The Node Server and its swagger API is also available: https://semsearch.fmi.uni-jena.de/daisi-api/api-docs/
 

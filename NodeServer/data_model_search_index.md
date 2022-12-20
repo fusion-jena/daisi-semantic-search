@@ -2,8 +2,10 @@
 
 The GATE Mímir search index needs to provide the following fields:
 
-title *title of the dataset*
-citation *citation of the dataset*
+title - *title of the dataset*
+
+citation - *citation of the dataset*
+
 description *longer textual description of the dataset, e.g., abstract*
 docId *dataset ID*
 dataCenter *data center hosting the dataset*

@@ -31,7 +31,7 @@ The Node Server and its swagger API is also available: https://semsearch.fmi.uni
 
 Please get further information on how to setup Dai:Si for your own index from the original GitHub repository: https://github.com/fusion-jena/DaiSi
 
-The data model for the search index is described in [data_model_search_index.md(]https://github.com/fusion-jena/daisi-semantic-search/blob/main/NodeServer/data_model_search_index.md)
+The data model for the search index is described in [data_model_search_index.md](https://github.com/fusion-jena/daisi-semantic-search/blob/main/NodeServer/data_model_search_index.md)
 
 ## Issue Tracking
 
